@@ -1,5 +1,9 @@
 package objects
 
+import (
+	"strconv"
+)
+
 // Unique identifier for the todo item
 // Description of the todo item
 // Indicates whether the todo item is checked or not
@@ -19,7 +23,6 @@ func (t *Todo) Toggle() {
 func (t *Todo) Update(description string) {
 	t.Description = description
 }
-
 
 type Todos struct {
 	Todos []Todo
@@ -43,4 +46,16 @@ func (t *Todos) Remove(todo Todo) {
 			break
 		}
 	}
+}
+
+func (t *Todos) Get(id string) Todo {
+	for _, v := range t.Todos {
+		if v.Id == func() int {
+			num, _ := strconv.Atoi(id)
+			return num
+		}() {
+			return v
+		}
+	}
+	return Todo{}
 }

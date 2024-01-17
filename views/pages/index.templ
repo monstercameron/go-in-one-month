@@ -1,8 +1,8 @@
-package views
+package pages
 
 import (
 	"github.com/monstercameron/go-in-one-month/objects"
-	"github.com/monstercameron/go-in-one-month/views/partials/todos/todo"
+	"github.com/monstercameron/go-in-one-month/views/components"
 )
 
 templ IndexPage(title string, todos *objects.Todos) {
@@ -17,8 +17,10 @@ templ IndexPage(title string, todos *objects.Todos) {
 			<hr/>
 			<div id="container">
 				<div id="todos">
-					for _, todo := range todos.Todos {
-						@views.TodoComponent(todo)
+					@components.TodosComponent() {
+						for _, todo := range todos.Todos {
+							@components.TodoComponent(todo)
+						}
 					}
 				</div>
 			</div>
