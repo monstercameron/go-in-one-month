@@ -1,0 +1,22 @@
+{
+  "name": "go-in-one-month",
+  "version": "1.0.0",
+  "description": "**Project Overview:**",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monstercameron/go-in-one-month.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monstercameron/go-in-one-month/issues"
+  },
+  "homepage": "https://github.com/monstercameron/go-in-one-month#readme",
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
