@@ -2,11 +2,9 @@ package main
 
 import (
 	"github.com/monstercameron/go-in-one-month/objects"
-	"github.com/monstercameron/go-in-one-month/views/pages"
 	"github.com/monstercameron/go-in-one-month/views/components"
+	"github.com/monstercameron/go-in-one-month/views/pages"
 	"net/http"
-	"context"
-	"os"
 )
 
 // todos is a variable that holds a new instance of the Todos struct.
@@ -56,6 +54,5 @@ func checkTodo(w http.ResponseWriter, r *http.Request) {
 	component := components.TodoComponent(todo)
 	// serve text/html
 	w.Header().Set("Content-Type", "text/html")
-	// render the component to the response writer
 	component.Render(r.Context(), w)
 }
