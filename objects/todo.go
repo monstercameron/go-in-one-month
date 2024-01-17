@@ -1,4 +1,4 @@
-package main
+package objects
 
 // Unique identifier for the todo item
 // Description of the todo item

@@ -1,6 +1,11 @@
 package views
 
-templ IndexPage(title string) {
+import (
+	"github.com/monstercameron/go-in-one-month/objects"
+	"github.com/monstercameron/go-in-one-month/views/partials/todos/todo"
+)
+
+templ IndexPage(title string, todos *objects.Todos) {
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
@@ -8,12 +13,14 @@ templ IndexPage(title string) {
 			<title>{ title }</title>
 		</head>
 		<body>
+			<h1>Todos:</h1>
+			<hr/>
 			<div id="container">
-				@IndexComponent() {
-					@todoComponent(){
-						
+				<div id="todos">
+					for _, todo := range todos.Todos {
+						@views.TodoComponent(todo)
 					}
-				}
+				</div>
 			</div>
 		</body>
 	</html>
