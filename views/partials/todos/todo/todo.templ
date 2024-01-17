@@ -1,5 +1,13 @@
-package main
+package views
 
-templ todoComponent(name string) {
-	<div>Hello, { name }</div>
+import (
+	"strconv"
+)
+
+templ todoComponent(id int, description string, checked bool) {
+	<div id="id-1">
+		<div>{ strconv.Itoa(id) }</div>
+		<div>description: { description } </div>
+		<div><input type="checkbox" name="" id="" checked?={ checked }/></div>
+	</div>
 }

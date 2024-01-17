@@ -1,6 +1,6 @@
 package views
 
-templ IndexPage(title string) {
+templ IndexComponent(title string) {
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
@@ -9,11 +9,7 @@ templ IndexPage(title string) {
 		</head>
 		<body>
 			<div id="container">
-				@IndexComponent() {
-					@todoComponent(){
-						
-					}
-				}
+			{ children... }
 			</div>
 		</body>
 	</html>
