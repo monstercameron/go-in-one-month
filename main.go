@@ -5,6 +5,8 @@ import (
 	"github.com/monstercameron/go-in-one-month/views/pages"
 	"github.com/monstercameron/go-in-one-month/views/components"
 	"net/http"
+	"context"
+	"os"
 )
 
 // todos is a variable that holds a new instance of the Todos struct.
@@ -46,9 +48,10 @@ func checkTodo(w http.ResponseWriter, r *http.Request) {
 	// get the todo id from the url
 	id := r.URL.Query().Get("id")
 	// get the todo from the todos object
-	todo := todos.Get(id)
+	todo, todoRef := todos.Get(id)
 	// check the todo
 	todo.Checked = true
+	todoRef.Checked = true
 	// return a TodoComponent html
 	component := components.TodoComponent(todo)
 	// serve text/html

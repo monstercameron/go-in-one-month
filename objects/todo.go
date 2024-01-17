@@ -48,14 +48,41 @@ func (t *Todos) Remove(todo Todo) {
 	}
 }
 
-func (t *Todos) Get(id string) Todo {
-	for _, v := range t.Todos {
-		if v.Id == func() int {
-			num, _ := strconv.Atoi(id)
-			return num
-		}() {
-			return v
+// func (t *Todos) GetCopy(id string) Todo {
+// 	for _, v := range t.Todos {
+// 		if v.Id == func() int {
+// 			num, _ := strconv.Atoi(id)
+// 			return num
+// 		}() {
+// 			return v
+// 		}
+// 	}
+// 	return Todo{}
+// }
+
+// func (t *Todos) Get(id string) *Todo {
+//     for _, v := range t.Todos {
+//         if v.Id == func() int {
+//             num, _ := strconv.Atoi(id)
+//             return num
+//         }() {
+//             return &v // return a pointer to the Todo object
+//         }
+//     }
+//     return nil // return nil if no Todo is found with the given id
+// }
+
+func (t *Todos) Get(id string) (Todo, *Todo) {
+	num, err := strconv.Atoi(id)
+	if err != nil {
+		// handle the error appropriately
+		return Todo{}, nil
+	}
+
+	for i, v := range t.Todos {
+		if v.Id == num {
+			return t.Todos[i], &t.Todos[i] // return both copy and pointer
 		}
 	}
-	return Todo{}
+	return Todo{}, nil // return zero value and nil pointer if no Todo is found
 }
