@@ -594,12 +594,12 @@ video {
   grid-column: span 2 / span 2;
 }
 
-.col-span-9 {
-  grid-column: span 9 / span 9;
-}
-
 .col-span-8 {
   grid-column: span 8 / span 8;
+}
+
+.col-span-9 {
+  grid-column: span 9 / span 9;
 }
 
 .m-5 {
@@ -639,12 +639,16 @@ video {
   height: 1.5rem;
 }
 
+.w-6 {
+  width: 1.5rem;
+}
+
 .w-full {
   width: 100%;
 }
 
-.w-6 {
-  width: 1.5rem;
+.animate-grow {
+  animation: grow 250ms ease-in-out forwards;
 }
 
 .cursor-pointer {

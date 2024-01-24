@@ -6,7 +6,7 @@ import (
 )
 
 templ TodoComponent(todo *objects.Todo) {
-	<div id={ "id-" + strconv.Itoa(todo.Id) } class="grid grid-cols-12 p-3 cursor-pointer">
+	<div id={ "id-" + strconv.Itoa(todo.Id) } class="grid grid-cols-12 p-3 cursor-pointer animate-grow">
 		<div class="col-span-1 text-2xl flex items-center justify-center">{ strconv.Itoa(todo.Id) }</div>
 		<div
 			class="col-span-8 flex items-center justify-left"

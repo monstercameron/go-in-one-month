@@ -9,7 +9,10 @@ module.exports = {
     extend: {
       fontFamily: {
         mono: ['Courier Prime', 'monospace'],
-      }
+      },
+      animation: {
+        'grow': 'grow 250ms ease-in-out forwards',
+      },
     },
   },
   plugins: [

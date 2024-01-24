@@ -1,0 +1,9 @@
+@keyframes grow {
+    0% {
+      transform: scaley(0);
+    }
+    100% {
+      transform: scaley(1);
+    }
+  }
+  
