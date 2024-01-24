@@ -1,23 +1,44 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="http://localhost:3000/static/style.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Todos test</title>
 </head>
 
 <body>
-    <div id="container">
-        <div id="todos">
-            <div id="id-1">
-                <div>id</div>
-                <div>description: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda ullam officiis iusto facere. Repellat, molestias error molestiae quam voluptatum corporis omnis reprehenderit cupiditate, incidunt pariatur esse ipsa cumque, earum nam.</div>
-                <div><input type="checkbox" name="" id=""></div>
+    <div id="container" class="container mx-auto border border-neutral-300 rounded shadow-lg m-5 p-5 bg-slate-200">
+        <h1 class="text-3xl">Todos:</h1>
+        <hr>
+        <div id="todos" class="grid grid-cols-1 p-3 divide-y divide-neutral-950">
+            <div id="id-1" class="grid grid-cols-12 p-3">
+
+                <div class="col-span-1 text-2xl flex items-center justify-center">1</div>
+
+                <div class=" col-span-9 flex items-center justify-left">
+                    <span class="text-2xl capitalize mr-5">Todo: </span>
+                    <span class="text-1xl capitalize underline mt-1">Buy
+                        milk</span>
+                </div>
+
+                <div class=" col-span-2  flex items-center justify-center">
+                    <input type="checkbox" name="" id="" hx-post="/check?id=1" hx-swap="innerHTML" hx-target="this">
+                </div>
+            </div>
+            <div id="id-2" class="columns-3  p-3 my-1">
+                <div>2</div>
+                <div>description: Buy eggs</div>
+                <div><input type="checkbox" name="" id="" checked hx-post="/check?id=2" hx-swap="innerHTML"
+                        hx-target="this"></div>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

@@ -15,16 +15,14 @@ templ IndexPage(title string, todos *objects.Todos) {
 			<title>{ title } test</title>
 		</head>
 		<body>
-			<h1>Todos:</h1>
-			<hr/>
-			<div id="container">
-				<div id="todos">
-					@components.TodosComponent() {
-						for _, todo := range todos.Todos {
-							@components.TodoComponent(todo)
-						}
+			<div id="container" class="container mx-auto border border-neutral-300 rounded shadow-lg m-5 p-5 bg-slate-200">
+				<h1 class="text-3xl">Todos:</h1>
+				<hr/>
+				@components.TodosComponent() {
+					for _, todo := range todos.Todos {
+						@components.TodoComponent(todo)
 					}
-				</div>
+				}
 			</div>
 		</body>
 	</html>

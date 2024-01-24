@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     'views/pages/**/*.templ',
-    'views/partials/**/*.templ',
+    'views/components/**/*.templ',
   ],
   darkMode: 'class',
   theme: {
