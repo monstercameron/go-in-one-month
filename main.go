@@ -23,7 +23,8 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("views/css"))))
 	http.HandleFunc("/", controller.GetTodo)
 	http.HandleFunc("/check", controller.CheckTodo)
-	http.HandleFunc("/description", controller.UpdateTodos)
+	http.HandleFunc("/update", controller.UpdateTodos)
+	http.HandleFunc("/edit", controller.EditTodo)
 	http.HandleFunc("/remove", controller.DeleteTodo)
 
 	// Setup signal handling and receive shutdown signal

@@ -12,6 +12,28 @@ import (
 // It takes in an http.ResponseWriter and an http.Request as parameters.
 // It renders the "Todos" page component to the response writer.
 func GetTodo(w http.ResponseWriter, r *http.Request) {
+	// Log request details (consider using a logging library for better control)
+	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+
+	// get id from url
+	id := r.URL.Query().Get("id")
+	// if id is not empty
+	if id != "" {
+		// get todo from todo list
+		todo := objects.TodoList.Get(id)
+		// if todo is not nil
+		if todo != nil {
+			// create and render the TodoComponent
+			component := components.TodoComponent(todo)
+			// serve text/html
+			w.Header().Set("Content-Type", "text/html")
+			// render the component to the response writer
+			component.Render(r.Context(), w)
+			// return
+			return
+		}
+	}
+
 	component := pages.IndexPage("Todos", objects.TodoList)
 	// serve text/html
 	w.Header().Set("Content-Type", "text/html")
@@ -78,9 +100,9 @@ func UpdateTodos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	description := r.URL.Query().Get("tsk")
+	description := r.FormValue("description")
 	if description == "" {
-		http.Error(w, "Todo Description is required", http.StatusBadRequest)
+		http.Error(w, "Description is required", http.StatusBadRequest)
 		return
 	}
 
@@ -134,6 +156,43 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 
 	// Create and render the TodoComponent
 	component := components.TodoComponent(todo)
+	w.Header().Set("Content-Type", "text/html")
+	component.Render(r.Context(), w)
+}
+
+// EditTodo handles the HTTP request for editing a todo item.
+// It logs the request details, checks if the method is GET,
+// retrieves the todo item based on the provided ID,
+// and renders the TodoEditComponent to display the edit form.
+// Parameters:
+// - w: http.ResponseWriter - the response writer for sending the HTTP response
+// - r: *http.Request - the HTTP request received
+// Returns: None
+func EditTodo(w http.ResponseWriter, r *http.Request) {
+	// Log request details (consider using a logging library for better control)
+	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+
+	// Check if method is GET
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Get the todo ID from the URL
+	id := r.URL.Query().Get("id")
+	if id == "" {
+		http.Error(w, "Todo ID is required", http.StatusBadRequest)
+		return
+	}
+
+	// Retrieve the todo item
+	todo := objects.TodoList.Get(id)
+	if todo == nil {
+		http.Error(w, "Todo not found", http.StatusNotFound)
+		return
+	}
+	// Create and render the TodoComponent
+	component := components.TodoEditComponent(todo)
 	w.Header().Set("Content-Type", "text/html")
 	component.Render(r.Context(), w)
 }
