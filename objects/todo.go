@@ -25,18 +25,18 @@ func (t *Todo) Update(description string) {
 }
 
 type Todos struct {
-    Todos []*Todo
+	Todos []*Todo
 }
 
 // NewTodos is a package-level function that returns a new instance of Todos.
 func NewTodos() *Todos {
-    return &Todos{
-        Todos: make([]*Todo, 0), // Initialize the slice to hold pointers to Todo structs
-    }
+	return &Todos{
+		Todos: make([]*Todo, 0), // Initialize the slice to hold pointers to Todo structs
+	}
 }
 
 func (t *Todos) Add(todo *Todo) {
-    t.Todos = append(t.Todos, todo)
+	t.Todos = append(t.Todos, todo)
 }
 
 func (t *Todos) Remove(todo Todo) {
@@ -73,16 +73,25 @@ func (t *Todos) Remove(todo Todo) {
 // }
 
 func (t *Todos) Get(id string) *Todo {
-    num, err := strconv.Atoi(id)
-    if err != nil {
-        // handle the error appropriately
-        return nil
-    }
+	num, err := strconv.Atoi(id)
+	if err != nil {
+		// handle the error appropriately
+		return nil
+	}
 
-    for _, v := range t.Todos {
-        if v.Id == num {
-            return v
-        }
-    }
-    return nil
+	for _, v := range t.Todos {
+		if v.Id == num {
+			return v
+		}
+	}
+	return nil
+}
+
+// todos is a variable that holds a new instance of the Todos struct.
+var TodoList = NewTodos()
+
+func PopulateTodos() {
+	TodoList.Add(&Todo{Id: 1, Description: "Buy milk", Checked: false})
+	TodoList.Add(&Todo{Id: 2, Description: "Buy eggs", Checked: true})
+	TodoList.Add(&Todo{Id: 3, Description: "Buy bread", Checked: false})
 }
