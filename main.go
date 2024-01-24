@@ -1,15 +1,11 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"github.com/monstercameron/go-in-one-month/controller"
+	"github.com/monstercameron/go-in-one-month/helpers"
 	"github.com/monstercameron/go-in-one-month/objects"
 	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
 func main() {
@@ -28,7 +24,7 @@ func main() {
 	http.HandleFunc("/remove", controller.DeleteTodo)
 
 	// Setup signal handling and receive shutdown signal
-	done := setupSignalHandling(server)
+	done := helpers.SetupSignalHandling(server)
 
 	// Start the server in a goroutine
 	go func() {
@@ -41,30 +37,4 @@ func main() {
 	// Block until a shutdown signal is received
 	<-done
 	fmt.Println("Server gracefully stopped")
-}
-
-// setupSignalHandling sets up signal handling for graceful shutdown of the HTTP server.
-// It takes a pointer to an http.Server as input and returns a channel that will be closed
-// when a termination signal is received.
-func setupSignalHandling(server *http.Server) <-chan struct{} {
-	done := make(chan struct{})
-
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt, syscall.SIGTERM)
-
-	go func() {
-		<-signalChan
-		fmt.Println("Signal received, starting graceful shutdown")
-
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-
-		if err := server.Shutdown(ctx); err != nil {
-			fmt.Printf("HTTP server Shutdown: %v\n", err)
-		}
-
-		close(done)
-	}()
-
-	return done
 }
