@@ -21,9 +21,9 @@ This guide outlines the steps to create a dynamic To-Do List application using G
 - [x] **Initialize a Web Server:** Set up a Go server with necessary routes.
 - [x] **Create Base To-Do Page Route:** Develop a route to serve the base HTML page, including existing to-do items.
 - [x] **List To-Dos Route:** Implement a route to retrieve and display a list of current to-dos from the database.
-- [ ] **Add To-Do Route:** Develop a route for adding new to-do items to the database.
-- [ ] **Update To-Do Route:** Create a route to handle updating the status or content of an existing to-do item.
-- [ ] **Delete To-Do Route:** Establish a route to delete a specific to-do item from the database.
+- [x] **Add To-Do Route:** Develop a route for adding new to-do items to the database.
+- [x] **Update To-Do Route:** Create a route to handle updating the status or content of an existing to-do item.
+- [x] **Delete To-Do Route:** Establish a route to delete a specific to-do item from the database.
 
 ### 5. Integrate HTMX for Dynamic Content
 - [x] Use HTMX to enhance front-end interactions without full page reloads.
@@ -36,7 +36,7 @@ This guide outlines the steps to create a dynamic To-Do List application using G
   - Ensure responsive design for different screen sizes.
 
 ### 7. Testing
-- [ ] Perform thorough testing of each functionality.
+- [x] Perform thorough testing of each functionality.
   - Test the CRUD operations (Create, Read, Update, Delete) on to-do items.
   - Ensure HTMX updates the page correctly without a full reload.
   - Validate the layout and responsiveness with Tailwind CSS.

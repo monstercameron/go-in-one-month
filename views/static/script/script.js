@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
   console.log("DOM fully loaded and parsed");
 });
 
-
 document.addEventListener('htmx:afterSwap', function(event) {
     // Check if the target is the #todos container
     if (event.detail.target.id === 'todos') {
