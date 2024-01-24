@@ -72,17 +72,17 @@ func (t *Todos) Remove(todo Todo) {
 //     return nil // return nil if no Todo is found with the given id
 // }
 
-func (t *Todos) Get(id string) (Todo, *Todo) {
+func (t *Todos) Get(id string) (*Todo) {
 	num, err := strconv.Atoi(id)
 	if err != nil {
 		// handle the error appropriately
-		return Todo{}, nil
+		return &Todo{}
 	}
 
 	for i, v := range t.Todos {
 		if v.Id == num {
-			return t.Todos[i], &t.Todos[i] // return both copy and pointer
+			return &t.Todos[i] // return both copy and pointer
 		}
 	}
-	return Todo{}, nil // return zero value and nil pointer if no Todo is found
+	return &Todo{} // return zero value and nil pointer if no Todo is found
 }

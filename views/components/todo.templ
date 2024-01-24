@@ -6,7 +6,7 @@ import (
 )
 
 templ TodoComponent(todo objects.Todo) {
-	<div id="id-1" hx-post="/clicked" hx-swap="outerHTML">
+	<div id="id-1" hx-post={ "/clicked?id=" + strconv.Itoa(todo.Id) } hx-swap="innerHTML" hx-target="#container">
 		<div>{ strconv.Itoa(todo.Id) }</div>
 		<div>description: { todo.Description } </div>
 		<div><input type="checkbox" name="" id="" checked?={ todo.Checked }/></div>

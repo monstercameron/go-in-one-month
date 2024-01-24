@@ -1,0 +1,6 @@
+{
+    "events": {
+      "restart": "FILENAME={filename}"
+    }
+  }
+  

@@ -4,7 +4,10 @@
   "description": "**Project Overview:**",
   "main": "tailwind.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwinds": "npx tailwindcss -i ./views/css/template.css -o ./views/css/style.css --watch",
+    "dev": "nodemon -e go --signal SIGTERM --exec go run .",
+    "templ": "nodemon -V -e templ --exec './sh/templgenerate.sh $FILENAME'"
   },
   "repository": {
     "type": "git",
@@ -16,7 +19,10 @@
     "url": "https://github.com/monstercameron/go-in-one-month/issues"
   },
   "homepage": "https://github.com/monstercameron/go-in-one-month#readme",
-  "dependencies": {
+  "devDependencies": {
     "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "nodemon": "^3.0.3"
   }
 }
