@@ -16,7 +16,7 @@ func main() {
 	server := &http.Server{Addr: ":3000"}
 
 	// Set up your HTTP handlers
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("views/css"))))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("views/static"))))
 	http.HandleFunc("/", controller.GetTodo)
 	http.HandleFunc("/check", controller.CheckTodo)
 	http.HandleFunc("/update", controller.UpdateTodos)
