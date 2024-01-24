@@ -23,6 +23,8 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("views/css"))))
 	http.HandleFunc("/", controller.GetTodo)
 	http.HandleFunc("/check", controller.CheckTodo)
+	http.HandleFunc("/description", controller.UpdateTodos)
+	http.HandleFunc("/remove", controller.DeleteTodo)
 
 	// Setup signal handling and receive shutdown signal
 	done := setupSignalHandling(server)
@@ -40,8 +42,9 @@ func main() {
 	fmt.Println("Server gracefully stopped")
 }
 
-// setupSignalHandling sets up listening for SIGTERM and SIGINT signals
-// and initiates a graceful server shutdown when such signals are received.
+// setupSignalHandling sets up signal handling for graceful shutdown of the HTTP server.
+// It takes a pointer to an http.Server as input and returns a channel that will be closed
+// when a termination signal is received.
 func setupSignalHandling(server *http.Server) <-chan struct{} {
 	done := make(chan struct{})
 
