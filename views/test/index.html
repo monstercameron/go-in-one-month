@@ -14,9 +14,9 @@
 
 <body>
     <div id="container" class="container mx-auto border border-neutral-300 rounded shadow-lg m-5 p-5 bg-slate-200">
-        <h1 class="text-3xl">Todos:</h1>
+        <h1 class="text-5xl">Todos:</h1>
         <hr>
-        <div id="todos" class="grid grid-cols-1 p-3 divide-y divide-neutral-950">
+        <div id="todos" class="ml-10 grid grid-cols-1 p-3 divide-y divide-neutral-950">
             <div id="id-1" class="grid grid-cols-12 p-3">
 
                 <div class="col-span-1 text-2xl flex items-center justify-center">1</div>
@@ -31,6 +31,7 @@
                     <input type="checkbox" name="" id="" hx-post="/check?id=1" hx-swap="innerHTML" hx-target="this">
                 </div>
             </div>
+
             <div id="id-2" class="grid grid-cols-12 p-3">
 
                 <div class="col-span-1 text-2xl flex items-center justify-center">1</div>
@@ -41,7 +42,7 @@
                         <input type="text" name="description" id="description" value="buy cheese"
                             class="col-span-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         <button type="button"
-                            class="border border-neutral-300 bg-sky-950 text-white py-1 px-2 rounded-lg"
+                            class="border border-neutral-300 bg-sky-700 text-white py-1 px-2 rounded-lg"
                             hx-get="/edit?id=2" hx-swap="innerHTML" hx-target="#description-2">
                             save
                         </button>
@@ -52,20 +53,39 @@
                     <input type="checkbox" name="" id="" hx-post="/check?id=1" hx-swap="innerHTML" hx-target="this">
                 </div>
             </div>
-            <div id="id-1" class="grid grid-cols-12 p-3 cursor-pointer">
+
+            <div id="id-3" class="grid grid-cols-12 p-3 cursor-pointer">
                 <div class="col-span-1 text-2xl flex items-center justify-center">1</div>
                 <div class=" col-span-9 flex items-center justify-left">
                     <span class="text-2xl capitalize mr-5">Todo: </span>
                     <span class="text-1xl capitalize underline mt-1">
-                        <input type="text" name="description" id="description-1" value="Buy milk" class="col-span-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <button type="button" class="border border-neutral-300 bg-sky-950 text-white py-1 px-2 rounded-lg" hx-post="/update?id=1" hx-swap="innerHTML" hx-target="#id-1">save</button>
+                        <input type="text" name="description" id="description-1" value="Buy milk"
+                            class="col-span-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <button type="button"
+                            class="border border-neutral-300 bg-sky-700 text-white py-1 px-2 rounded-lg"
+                            hx-post="/update?id=1" hx-swap="innerHTML" hx-target="#id-1">save</button>
                     </span>
                 </div>
                 <div class=" col-span-2  flex items-center justify-center">
-                    <input type="checkbox" name="" id="" checked hx-post="/check?id=1" hx-swap="innerHTML" hx-target="this">
+                    <input type="checkbox" name="" id="" checked hx-post="/check?id=1" hx-swap="innerHTML"
+                        hx-target="this">
                 </div>
             </div>
-            
+        </div>
+
+        <div id="add-todos" class="grid grid-cols-12 p-3 cursor-pointer">
+            <div class="col-span-11 flex items-center justify-left">
+                <input type="text" name="description" id="add-todo" placeholder="Buy milk..."
+                    class="col-span-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    hx-post="/create" hx-swap="beforeend" hx-target="todos" hx-trigger="1
+                    keyup[keyCode==13]">
+            </div>
+            <div class="col-span-1">
+                <button class="col-span-1 border border-neutral-300 bg-sky-700 text-white py-2 px-2 rounded-lg w-full"
+                    hx-post="/create" hx-swap="beforeend" hx-target="todos">
+                    Save
+                </button>
+            </div>
         </div>
     </div>
 </body>

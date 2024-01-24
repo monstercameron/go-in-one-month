@@ -34,7 +34,7 @@ func GetTodo(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	component := pages.IndexPage("Todos", objects.TodoList)
+	component := pages.IndexPage("My Todo List", objects.TodoList)
 	// serve text/html
 	w.Header().Set("Content-Type", "text/html")
 	// render the component to the response writer
@@ -132,7 +132,7 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
 
 	// Check if method is POST
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodDelete {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -154,10 +154,11 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	// Delete the todo item
 	objects.TodoList.Remove(*todo)
 
-	// Create and render the TodoComponent
-	component := components.TodoComponent(todo)
 	w.Header().Set("Content-Type", "text/html")
-	component.Render(r.Context(), w)
+	// reurn a 200 OK response
+	w.WriteHeader(http.StatusOK)
+	// write a message to the response writer
+	fmt.Fprintf(w, "")
 }
 
 // EditTodo handles the HTTP request for editing a todo item.
@@ -193,6 +194,42 @@ func EditTodo(w http.ResponseWriter, r *http.Request) {
 	}
 	// Create and render the TodoComponent
 	component := components.TodoEditComponent(todo)
+	w.Header().Set("Content-Type", "text/html")
+	component.Render(r.Context(), w)
+}
+
+// CreateTodoForm handles the creation of a new todo form.
+// It logs the request details, checks if the method is GET,
+// validates the description field, creates a new todo object,
+// adds it to the todo list, and renders the TodoComponent.
+// 
+// Parameters:
+// - w: http.ResponseWriter - the response writer used to write the HTTP response.
+// - r: *http.Request - the HTTP request received.
+//
+// Returns: None
+func CreateTodos(w http.ResponseWriter, r *http.Request) {
+	// Log request details (consider using a logging library for better control)
+	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+
+	// Check if method is POST
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	description := r.FormValue("description")
+	if description == "" {
+		http.Error(w, "Description is required", http.StatusBadRequest)
+		return
+	}
+
+	id := len(objects.TodoList.Todos) + 1
+	var todo = &objects.Todo{Id: id, Description: description, Checked: false}
+	objects.TodoList.Add(todo)
+
+	// Create and render the TodoComponent
+	component := components.TodoComponent(todo)
 	w.Header().Set("Content-Type", "text/html")
 	component.Render(r.Context(), w)
 }

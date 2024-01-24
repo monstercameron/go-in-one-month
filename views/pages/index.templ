@@ -13,17 +13,18 @@ templ IndexPage(title string, todos *objects.Todos) {
 			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 			<link rel="stylesheet" href="/static/css/style.css"/>
 			<script rel="script" src="/static/script/script.js"></script>
-			<title>{ title } test</title>
+			<title>{ title }</title>
 		</head>
 		<body>
 			<div id="container" class="container mx-auto border border-neutral-300 rounded shadow-lg m-5 p-5 bg-slate-200">
-				<h1 class="text-3xl">Todos:</h1>
+				<h1 class="text-5xl">Todos:</h1>
 				<hr/>
 				@components.TodosComponent() {
 					for _, todo := range todos.Todos {
 						@components.TodoComponent(todo)
 					}
 				}
+				@components.AddTodoComponent()
 			</div>
 		</body>
 	</html>

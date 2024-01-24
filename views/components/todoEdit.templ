@@ -20,7 +20,7 @@ templ TodoEditComponent(todo *objects.Todo) {
 				/>
 				<button
 					type="button"
-					class="col-span-1 border border-neutral-300 bg-sky-950 text-white py-1 px-2 rounded-lg"
+					class="col-span-1 border border-neutral-300 bg-sky-700 text-white py-1 px-2 rounded-lg"
 					hx-post={ "/update?id=" + strconv.Itoa(todo.Id) }
 					hx-swap="outerHTML"
 					hx-target={ "#id-" + strconv.Itoa(todo.Id) }

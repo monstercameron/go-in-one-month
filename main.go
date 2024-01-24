@@ -21,7 +21,8 @@ func main() {
 	http.HandleFunc("/check", controller.CheckTodo)
 	http.HandleFunc("/update", controller.UpdateTodos)
 	http.HandleFunc("/edit", controller.EditTodo)
-	http.HandleFunc("/remove", controller.DeleteTodo)
+	http.HandleFunc("/delete", controller.DeleteTodo)
+	http.HandleFunc("/create", controller.CreateTodos)
 
 	// Setup signal handling and receive shutdown signal
 	done := helpers.SetupSignalHandling(server)
