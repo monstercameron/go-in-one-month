@@ -25,18 +25,18 @@ func (t *Todo) Update(description string) {
 }
 
 type Todos struct {
-	Todos []Todo
+    Todos []*Todo
 }
 
 // NewTodos is a package-level function that returns a new instance of Todos.
 func NewTodos() *Todos {
-	return &Todos{
-		Todos: make([]Todo, 0),
-	}
+    return &Todos{
+        Todos: make([]*Todo, 0), // Initialize the slice to hold pointers to Todo structs
+    }
 }
 
-func (t *Todos) Add(todo Todo) {
-	t.Todos = append(t.Todos, todo)
+func (t *Todos) Add(todo *Todo) {
+    t.Todos = append(t.Todos, todo)
 }
 
 func (t *Todos) Remove(todo Todo) {
@@ -72,17 +72,17 @@ func (t *Todos) Remove(todo Todo) {
 //     return nil // return nil if no Todo is found with the given id
 // }
 
-func (t *Todos) Get(id string) (*Todo) {
-	num, err := strconv.Atoi(id)
-	if err != nil {
-		// handle the error appropriately
-		return &Todo{}
-	}
+func (t *Todos) Get(id string) *Todo {
+    num, err := strconv.Atoi(id)
+    if err != nil {
+        // handle the error appropriately
+        return nil
+    }
 
-	for i, v := range t.Todos {
-		if v.Id == num {
-			return &t.Todos[i] // return both copy and pointer
-		}
-	}
-	return &Todo{} // return zero value and nil pointer if no Todo is found
+    for _, v := range t.Todos {
+        if v.Id == num {
+            return v
+        }
+    }
+    return nil
 }

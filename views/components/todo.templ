@@ -5,10 +5,12 @@ import (
 	"strconv"
 )
 
-templ TodoComponent(todo objects.Todo) {
-	<div id="id-1" hx-post={ "/clicked?id=" + strconv.Itoa(todo.Id) } hx-swap="innerHTML" hx-target="#container">
+templ TodoComponent(todo *objects.Todo) {
+	<div id="id-1">
 		<div>{ strconv.Itoa(todo.Id) }</div>
 		<div>description: { todo.Description } </div>
-		<div><input type="checkbox" name="" id="" checked?={ todo.Checked }/></div>
+		<div>
+			<input type="checkbox" name="" id="" checked?={ todo.Checked } hx-post={ "/check?id=" + strconv.Itoa(todo.Id) } hx-swap="innerHTML" hx-target="this"/>
+		</div>
 	</div>
 }

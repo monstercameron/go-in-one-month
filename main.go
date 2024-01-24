@@ -45,9 +45,10 @@ func main() {
 }
 
 func populateTodos() {
-	todos.Add(objects.Todo{Id: 1, Description: "Buy milk", Checked: false})
-	todos.Add(objects.Todo{Id: 2, Description: "Buy eggs", Checked: true})
-	todos.Add(objects.Todo{Id: 3, Description: "Buy bread", Checked: false})
+	todos.Add(&objects.Todo{Id: 1, Description: "Buy milk", Checked: false})
+	todos.Add(&objects.Todo{Id: 2, Description: "Buy eggs", Checked: true})
+	todos.Add(&objects.Todo{Id: 3, Description: "Buy bread", Checked: false})
+
 }
 
 func getTodo(w http.ResponseWriter, r *http.Request) {
@@ -59,27 +60,42 @@ func getTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkTodo(w http.ResponseWriter, r *http.Request) {
-	// print request details
-	fmt.Println(r.Method, r.URL, r.Proto)
+	// Log request details (consider using a logging library for better control)
+	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
 
-	// check if method is post
+	// Check if method is POST
 	if r.Method != http.MethodPost {
-		// if not, return a 405
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	// get the todo id from the url
+
+	// Get the todo ID from the URL
 	id := r.URL.Query().Get("id")
-	// get the todo from the todos object
+	if id == "" {
+		http.Error(w, "Todo ID is required", http.StatusBadRequest)
+		return
+	}
+
+	// Retrieve the todo item
 	todo := todos.Get(id)
-	// check the todo
+	if todo == nil {
+		http.Error(w, "Todo not found", http.StatusNotFound)
+		return
+	}
+
+	// Update the todo item
 	todo.Checked = true
-	// return a TodoComponent html
-	component := components.TodoComponent(*todo)
-	// serve text/html
+
+	// print todos slice
+	// fmt.Println(todos.Todos)
+
+	// Create and render the TodoComponent
+	component := components.TodoComponent(todo)
 	w.Header().Set("Content-Type", "text/html")
 	component.Render(r.Context(), w)
+
 }
+
 
 // setupSignalHandling sets up listening for SIGTERM and SIGINT signals
 // and initiates a graceful server shutdown when such signals are received.
