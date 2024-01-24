@@ -1,0 +1,29 @@
+package pages
+
+import (
+	"github.com/monstercameron/go-in-one-month/objects"
+	"github.com/monstercameron/go-in-one-month/views/components"
+)
+
+templ IndexPage(title string, todos *objects.Todos) {
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+			<link rel="stylesheet" href="/static/style.css"/>
+			<title>{ title } test</title>
+		</head>
+		<body>
+			<div id="container" class="container mx-auto border border-neutral-300 rounded shadow-lg m-5 p-5 bg-slate-200">
+				<h1 class="text-3xl">Todos:</h1>
+				<hr/>
+				@components.TodosComponent() {
+					for _, todo := range todos.Todos {
+						@components.TodoComponent(todo)
+					}
+				}
+			</div>
+		</body>
+	</html>
+}
