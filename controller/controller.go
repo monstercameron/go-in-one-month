@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"github.com/monstercameron/go-in-one-month/helpers"
 	"github.com/monstercameron/go-in-one-month/objects"
 	"github.com/monstercameron/go-in-one-month/views/components"
 	"github.com/monstercameron/go-in-one-month/views/pages"
@@ -13,7 +14,13 @@ import (
 // It renders the "Todos" page component to the response writer.
 func GetTodo(w http.ResponseWriter, r *http.Request) {
 	// Log request details (consider using a logging library for better control)
-	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+	helpers.Slogger.Info("Received request", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto)
+
+	if r.Method != http.MethodGet {
+		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 
 	// get id from url
 	id := r.URL.Query().Get("id")
@@ -47,10 +54,11 @@ func GetTodo(w http.ResponseWriter, r *http.Request) {
 // If any errors occur during the process, appropriate HTTP error responses are sent.
 func CheckTodo(w http.ResponseWriter, r *http.Request) {
 	// Log request details (consider using a logging library for better control)
-	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+	helpers.Slogger.Info("Received request", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto)
 
 	// Check if method is POST
 	if r.Method != http.MethodPost {
+		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -58,6 +66,7 @@ func CheckTodo(w http.ResponseWriter, r *http.Request) {
 	// Get the todo ID from the URL
 	id := r.URL.Query().Get("id")
 	if id == "" {
+		helpers.Slogger.Info("Todo ID is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
 		http.Error(w, "Todo ID is required", http.StatusBadRequest)
 		return
 	}
@@ -65,6 +74,7 @@ func CheckTodo(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the todo item
 	todo := objects.TodoList.Get(id)
 	if todo == nil {
+		helpers.Slogger.Info("Todo not found", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusNotFound)
 		http.Error(w, "Todo not found", http.StatusNotFound)
 		return
 	}
@@ -85,10 +95,11 @@ func CheckTodo(w http.ResponseWriter, r *http.Request) {
 // If any required parameters are missing or the todo item is not found, it returns an appropriate error response.
 func UpdateTodos(w http.ResponseWriter, r *http.Request) {
 	// Log request details (consider using a logging library for better control)
-	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+	helpers.Slogger.Info("Received request", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto)
 
 	// Check if method is POST
 	if r.Method != http.MethodPost {
+		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -96,12 +107,14 @@ func UpdateTodos(w http.ResponseWriter, r *http.Request) {
 	// Get the todo ID from the URL
 	id := r.URL.Query().Get("id")
 	if id == "" {
+		helpers.Slogger.Info("Todo ID is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
 		http.Error(w, "Todo ID is required", http.StatusBadRequest)
 		return
 	}
 
 	description := r.FormValue("description")
 	if description == "" {
+		helpers.Slogger.Info("Description is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
 		http.Error(w, "Description is required", http.StatusBadRequest)
 		return
 	}
@@ -109,6 +122,7 @@ func UpdateTodos(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the todo item
 	todo := objects.TodoList.Get(id)
 	if todo == nil {
+		helpers.Slogger.Info("Todo not found", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusNotFound)
 		http.Error(w, "Todo not found", http.StatusNotFound)
 		return
 	}
@@ -129,10 +143,11 @@ func UpdateTodos(w http.ResponseWriter, r *http.Request) {
 // If any required parameters are missing or the todo item is not found, it returns an appropriate error response.
 func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	// Log request details (consider using a logging library for better control)
-	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+	helpers.Slogger.Info("Received request", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto)
 
 	// Check if method is POST
 	if r.Method != http.MethodDelete {
+		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -140,6 +155,7 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	// Get the todo ID from the URL
 	id := r.URL.Query().Get("id")
 	if id == "" {
+		helpers.Slogger.Info("Todo ID is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
 		http.Error(w, "Todo ID is required", http.StatusBadRequest)
 		return
 	}
@@ -147,6 +163,7 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the todo item
 	todo := objects.TodoList.Get(id)
 	if todo == nil {
+		helpers.Slogger.Info("Todo not found", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusNotFound)
 		http.Error(w, "Todo not found", http.StatusNotFound)
 		return
 	}
@@ -171,17 +188,20 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 // Returns: None
 func EditTodo(w http.ResponseWriter, r *http.Request) {
 	// Log request details (consider using a logging library for better control)
-	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+	helpers.Slogger.Info("Received request", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto)
 
 	// Check if method is GET
 	if r.Method != http.MethodGet {
+		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
 		return
 	}
 
 	// Get the todo ID from the URL
 	id := r.URL.Query().Get("id")
 	if id == "" {
+		helpers.Slogger.Info("Todo ID is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
 		http.Error(w, "Todo ID is required", http.StatusBadRequest)
 		return
 	}
@@ -189,6 +209,7 @@ func EditTodo(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the todo item
 	todo := objects.TodoList.Get(id)
 	if todo == nil {
+		helpers.Slogger.Info("Todo not found", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusNotFound)
 		http.Error(w, "Todo not found", http.StatusNotFound)
 		return
 	}
@@ -202,7 +223,7 @@ func EditTodo(w http.ResponseWriter, r *http.Request) {
 // It logs the request details, checks if the method is GET,
 // validates the description field, creates a new todo object,
 // adds it to the todo list, and renders the TodoComponent.
-// 
+//
 // Parameters:
 // - w: http.ResponseWriter - the response writer used to write the HTTP response.
 // - r: *http.Request - the HTTP request received.
@@ -210,21 +231,24 @@ func EditTodo(w http.ResponseWriter, r *http.Request) {
 // Returns: None
 func CreateTodos(w http.ResponseWriter, r *http.Request) {
 	// Log request details (consider using a logging library for better control)
-	fmt.Printf("Received request - Method: %s, URL: %s, Protocol: %s\n", r.Method, r.URL, r.Proto)
+	helpers.Slogger.Info("Received request", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto)
 
 	// Check if method is POST
 	if r.Method != http.MethodPost {
+		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	description := r.FormValue("description")
 	if description == "" {
+		helpers.Slogger.Info("Description is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
 		http.Error(w, "Description is required", http.StatusBadRequest)
 		return
 	}
 
-	id := len(objects.TodoList.Todos) + 1
+	lastTodo := objects.TodoList.Todos[len(objects.TodoList.Todos)-1]
+	id := lastTodo.Id + 1
 	var todo = &objects.Todo{Id: id, Description: description, Checked: false}
 	objects.TodoList.Add(todo)
 
