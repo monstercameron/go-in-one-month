@@ -17,7 +17,7 @@ func GetTodo(w http.ResponseWriter, r *http.Request) {
 	helpers.Slogger.Info("Received request", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto)
 
 	if r.Method != http.MethodGet {
-		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
+		helpers.Slogger.Error("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -58,7 +58,7 @@ func CheckTodo(w http.ResponseWriter, r *http.Request) {
 
 	// Check if method is POST
 	if r.Method != http.MethodPost {
-		helpers.Slogger.Info("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
+		helpers.Slogger.Error("Method not allowed", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusMethodNotAllowed)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -66,7 +66,7 @@ func CheckTodo(w http.ResponseWriter, r *http.Request) {
 	// Get the todo ID from the URL
 	id := r.URL.Query().Get("id")
 	if id == "" {
-		helpers.Slogger.Info("Todo ID is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
+		helpers.Slogger.Error("Todo ID is required", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusBadRequest)
 		http.Error(w, "Todo ID is required", http.StatusBadRequest)
 		return
 	}
@@ -74,7 +74,7 @@ func CheckTodo(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the todo item
 	todo := objects.TodoList.Get(id)
 	if todo == nil {
-		helpers.Slogger.Info("Todo not found", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusNotFound)
+		helpers.Slogger.Error("Todo not found", "method", r.Method, "url", r.URL.String(), "protocol", r.Proto, "status", http.StatusNotFound)
 		http.Error(w, "Todo not found", http.StatusNotFound)
 		return
 	}
